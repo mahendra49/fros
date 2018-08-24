@@ -4,10 +4,12 @@ var mongoose                        = require("mongoose"),
     passport                        = require("passport"),
     bodyparser                      = require("body-parser"),
     Localstartegy                   = require("passport-local"),
+    expressSanitizer                = require("express-sanitizer"),
     passportlocalmongoose           = require("passport-local-mongoose"),
     User                            = require("./models/users"),
     flash                           = require("connect-flash"),
-    User                            = require("./models/users");
+    User                            = require("./models/users"),
+    Post                            = require("./models/posts");
 
 
 mongoose.connect("mongodb://localhost/social");
@@ -17,7 +19,7 @@ app.use(express.static(__dirname + '/public'));
 app.set("view engine","ejs");
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(flash());
-
+app.use(expressSanitizer());
 
 app.use(require("express-session")({
     secret:"holla bolla dolla",
@@ -73,7 +75,43 @@ app.post("/register",isLogged,function(req,res){
 
 //index page
 app.get("/user",isLoggedIn,function(req,res){
-    res.render("feed");
+    res.render("feed",{currentUser:req.user});
+});
+
+app.get("/posts/new",isLoggedIn,function(req,res){
+    res.render("new");
+});
+
+app.post("/posts",isLoggedIn,function(req,res){
+    
+    req.body.post.body = req.sanitize(req.body.post.body);
+    
+    Post.create(req.body.post,function(err,post){
+        if(err){
+            console.log("error in crating paper");
+            res.redirect("/posts/new");
+        }
+        else{
+             User.findOne({username:req.user.username},function(err,founduser){
+                if(err){
+                    console.log("error in finding user");
+                    res.redirect("/login");
+                }else{
+                    founduser.posts.push(post);
+                    founduser.save(function(err,data){
+                        if(err){
+                            console.log("error in sacing post, try again");
+                            res.redirect("/");
+                        }
+                        else{
+                            //console.log(data);
+                            res.redirect("/user");
+                        }
+                    });
+                }
+             });
+        }
+    });
 });
 
 app.get("/logout",function(req,res){
@@ -97,6 +135,6 @@ function isLogged(req,res,next){
     res.redirect("/user");
 }
 
-app.listen(5000,function(){
+app.listen(3000,function(){
     console.log("server started");
 });

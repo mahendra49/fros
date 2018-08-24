@@ -12,6 +12,12 @@ var userSchema = new mongoose.Schema({
         type:String,
         unique:true
     },
+    posts:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Post"
+        }
+    ]
 });
 
 userSchema.plugin(passportlocalmongoose);

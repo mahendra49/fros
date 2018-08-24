@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>posts</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+ <style type="text/css">
+     
+i.icon{
+  font-size: 2em;
+}
+
+.container.main{
+  margin-top: 7em;
+}
+
+#delete{
+  display: inline;
+}
+ </style>
+</head>
+<body>
+    <div class="ui fixed inverted menu">
+      <div class="ui container">
+        <div class="header item"> <i class="code icon"></i>Site</div>
+        <a href="/user" class="item">Home</a>
+        <a href="/blogs/new" class="item">New Post</a>
+      </div>
+    </div>
+
+
+    <div class="ui main text container segment">
+        <div class="ui huge header">New Blog</div>
+        <form class="ui form" action="/posts" method="POST">
+          <div class="field">
+            <label>Title</label>
+            <input type="text" name="post[title]" placeholder="title">
+          </div>
+          <div class="field">
+            <label>image</label>
+            <input type="text" name="post[image]" placeholder="image">
+          </div>
+          <div class="field">
+            <label>post</label>
+            <textarea name="post[body]" ></textarea>
+          </div>
+        <input class="ui violet basic big button" type="submit" value="submit">
+        </form>
+    </div> 
+</body>
+</html>
