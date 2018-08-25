@@ -75,24 +75,45 @@ app.post("/register",isLogged,function(req,res){
 
 //index page
 app.get("/user",isLoggedIn,function(req,res){
-    res.render("feed",{currentUser:req.user});
+    
+    Post.find({},function(err,posts){
+        if(err){
+            console.log("in user route");
+            res.redirect("/");
+        }
+        else{
+            res.render("feed",{currentUser:req.user,posts:posts});      
+        }  
+    });
+    //
 });
 
+
+
+//new posts logic
 app.get("/posts/new",isLoggedIn,function(req,res){
     res.render("new");
 });
 
+//display all posts logic missing :p
+
 app.post("/posts",isLoggedIn,function(req,res){
     
-    req.body.post.body = req.sanitize(req.body.post.body);
+    //req.body.post.body  = req.sanitize(req.body.post.body);
+    var newPost   = req.body.post;
+    var author    = {
+        id          : req.user._id,
+        username    : req.user.username
+    };
     
-    Post.create(req.body.post,function(err,post){
+    newPost.author = author; 
+    Post.create(newPost,function(err,post){
         if(err){
             console.log("error in crating paper");
             res.redirect("/posts/new");
         }
         else{
-             User.findOne({username:req.user.username},function(err,founduser){
+            User.findOne({username:req.user.username},function(err,founduser){
                 if(err){
                     console.log("error in finding user");
                     res.redirect("/login");
@@ -100,7 +121,7 @@ app.post("/posts",isLoggedIn,function(req,res){
                     founduser.posts.push(post);
                     founduser.save(function(err,data){
                         if(err){
-                            console.log("error in sacing post, try again");
+                            console.log("error in saving post, try again");
                             res.redirect("/");
                         }
                         else{
@@ -113,6 +134,42 @@ app.post("/posts",isLoggedIn,function(req,res){
         }
     });
 });
+
+//comments logic
+app.post("comment",isLoggedIn,function(req,res){
+    //get posts and add this comment to it;
+    Post.findById(req.params.id,function(err,Post){
+        if(err){
+            console.log(err);
+            res.redirect("/user");
+        }else{
+            Comment.create({text:req.body.comment},function(err,comment){
+                if(err){
+                    //flash here
+                    console.log(err);
+                    res.redirect("/user");
+                }else{
+                    //add username and id to comment
+                    comment.author.id       = req.user._id;
+                    comment.author.username = req.user.username;
+                    //save comment
+                    comment.save();
+                    //push to Post
+                    Post.comments.push(comment);
+                    Post.save();
+
+                    //flash here
+                    res.redirect("/user");
+
+                }   
+
+            });
+        }
+
+    });
+
+});
+
 
 app.get("/logout",function(req,res){
     req.logout();
