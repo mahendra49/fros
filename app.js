@@ -9,8 +9,8 @@ var mongoose                        = require("mongoose"),
     User                            = require("./models/users"),
     flash                           = require("connect-flash"),
     User                            = require("./models/users"),
-    Post                            = require("./models/posts");
-
+    Post                            = require("./models/posts"),
+    Comment                         = require("./models/comments");
 
 mongoose.connect("mongodb://localhost/social");
 
@@ -76,7 +76,7 @@ app.post("/register",isLogged,function(req,res){
 //index page
 app.get("/user",isLoggedIn,function(req,res){
     
-    Post.find({},function(err,posts){
+    Post.find({}).populate("comments").exec(function(err,posts){
         if(err){
             console.log("in user route");
             res.redirect("/");
@@ -109,7 +109,7 @@ app.post("/posts",isLoggedIn,function(req,res){
     newPost.author = author; 
     Post.create(newPost,function(err,post){
         if(err){
-            console.log("error in crating paper");
+            console.log("error--posts route");
             res.redirect("/posts/new");
         }
         else{
@@ -135,9 +135,14 @@ app.post("/posts",isLoggedIn,function(req,res){
     });
 });
 
+app.get("/comment/:id",isLoggedIn,function(req,res){
+    res.render("comment",{id:req.params.id});
+});
+
 //comments logic
-app.post("comment",isLoggedIn,function(req,res){
+app.post("/comment/:id",isLoggedIn,function(req,res){
     //get posts and add this comment to it;
+    console.log(req.user);
     Post.findById(req.params.id,function(err,Post){
         if(err){
             console.log(err);
@@ -146,7 +151,7 @@ app.post("comment",isLoggedIn,function(req,res){
             Comment.create({text:req.body.comment},function(err,comment){
                 if(err){
                     //flash here
-                    console.log(err);
+                    console.log("error in comments");
                     res.redirect("/user");
                 }else{
                     //add username and id to comment
