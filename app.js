@@ -20,6 +20,7 @@ app.set("view engine","ejs");
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(flash());
 app.use(expressSanitizer());
+app.use(bodyparser.json());
 
 app.use(require("express-session")({
     secret:"holla bolla dolla",
@@ -142,7 +143,8 @@ app.get("/comment/:id",isLoggedIn,function(req,res){
 //comments logic
 app.post("/comment/:id",isLoggedIn,function(req,res){
     //get posts and add this comment to it;
-    console.log(req.user);
+    //console.log(req.user);
+    console.log("im here"+req.body.comment);
     Post.findById(req.params.id,function(err,Post){
         if(err){
             console.log(err);
@@ -159,12 +161,13 @@ app.post("/comment/:id",isLoggedIn,function(req,res){
                     comment.author.username = req.user.username;
                     //save comment
                     comment.save();
+                    console.log(comment);
                     //push to Post
                     Post.comments.push(comment);
                     Post.save();
 
-                    //flash here
-                    res.redirect("/user");
+                    res.json({"comment":comment.text,"username":comment.author.username});
+                    res.status(200).end();
 
                 }   
 

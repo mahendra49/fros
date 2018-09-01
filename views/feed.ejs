@@ -1,3 +1,9 @@
+
+<!-- template credits  -->
+<!-- https://socialyte.codeplus.it/wall.html -->
+
+
+
 <!DOCTYPE html>
 <html>
 
@@ -17,14 +23,11 @@
     <script src="js/socialyte.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600,700" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-
+    <script type="text/javascript" src="js/trigger.js""></script>
 
     <!-- https://socialyte.codeplus.it/wall.html -->
 
    
-  
-
-    
 </head>
 
 <body id="wall">
@@ -41,7 +44,7 @@
         </div>
 
         <div class="second-icon menu-icon">
-            <span><a href="/user" title="Profile"><span class="hidden-xs hidden-sm"><%=currentUser.username%></span> <i class="fa fa-user" aria-hidden="true"></i></a>
+            <span><a href="/user" title="Profile"><span class="hidden-xs hidden-sm profile-name"><%=currentUser.username%></span> <i class="fa fa-user" aria-hidden="true"></i></a>
             </span>
         </div>
         
@@ -63,24 +66,46 @@
     <div class="content-posts active" id="posts">
         <div id="posts-container" class="container-fluid container-posts">
             <% posts.forEach(function(post){ %>
-                <div >
-                    <h2>username: <%=post.author.username%></h2>    
-                    <!-- body of post -->
-                    <div >
-                        <p><%=post.body%></p>
+                <div class="card-post">
+                <div class="row">
+                    <div class="col-xs-3 col-sm-2">
+                        <a href="personal-profile.html" title="Profile">
+                            <img src="img/user.jpg" alt="User name" class="img-circle img-user">
+                        </a>
                     </div>
-                    <button >like(<%=post.likes %>)</button>
-                    <button>dislike((<%=post.dislikes %>))</button>
-                    
-                    <%post.comments.forEach(function(comment){%>
-                        <h6><%=comment.text%></h6>
-                    <%});%>    
-                    
-                    <!-- //add comment here try for ajax here  -->
-                    <a class="btn btn-primary" href="/comment/<%=post._id%>">Comment</a>
+                    <div class="col-xs-9 col-sm-10 info-user">
+                        <h3><a href="personal-profile.html" title="Profile"><%=post.author.username%></a></h3>
+                        <p><i>2h</i></p>
+                    </div>
                 </div>
-                <hr/>
-            <% });%>    
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 data-post">
+                        <p><%=post.body%></p>
+                        <div class="reaction">
+                            <img draggable="false" class="emoji" alt="❤" src="https://twemoji.maxcdn.com/16x16/2764.png"> 156 <img draggable="false" class="emoji" alt="😃" src="https://twemoji.maxcdn.com/16x16/1f603.png"> 54
+                        </div>
+                        <div class="comments">
+                            
+                            <ul class="commentslist">
+                                <%post.comments.forEach(function(comment){%>
+                                    <li><b><%=comment.author.username%></b>  <%=comment.text%></li>
+                                <%});%>
+                            </ul>
+                            <div class="more-comments">View more comments</div>
+
+                            <form id="commentsubmit" action="/comment/<%=post._id%>" method="POST" >
+                                <input class="form-control" placeholder="Add a comment" type="text" name="comment">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+                
+            <% });%> 
+
+
 
         </div>
 
@@ -91,7 +116,10 @@
         </div>
     </div>
    
+
 </body>
+
+
 
 </html>
 
