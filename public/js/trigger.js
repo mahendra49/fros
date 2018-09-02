@@ -1,12 +1,12 @@
 $(document).ready(function(){
    $(".commentsubmit").on("submit",function(e){
         e.preventDefault();
-       // console.log(e);
+        // console.log(e);
+        console.log($(this).serialize());
 
-
+        console.log(e);
         var action1=e.currentTarget.action;
         
-        $(this).trigger("reset");
         $.ajax({
             url:action1,
             type:'post',
@@ -14,7 +14,7 @@ $(document).ready(function(){
             data: $(this).serialize(),
             success: function(data) {
                //$(this).trigger('reset');
-               //console.log("here");
+               console.log(data);
                $(".commentslist").append("<li><b>"+data.username+" </b>"+data.comment+"</li>");
                  
             },
@@ -22,7 +22,7 @@ $(document).ready(function(){
                 console.log("error");
             }
         })
-        
+        $(this).trigger("reset");
        
         
    });

@@ -144,7 +144,7 @@ app.get("/comment/:id",isLoggedIn,function(req,res){
 app.post("/comment/:id",isLoggedIn,function(req,res){
     //get posts and add this comment to it;
     //console.log(req.user);
-   // console.log("im here"+req.body.comment);
+    console.log("im here"+req.body.comment);
     Post.findById(req.params.id,function(err,Post){
         if(err){
             console.log(err);
