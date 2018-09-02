@@ -144,7 +144,7 @@ app.get("/comment/:id",isLoggedIn,function(req,res){
 app.post("/comment/:id",isLoggedIn,function(req,res){
     //get posts and add this comment to it;
     //console.log(req.user);
-    console.log("im here"+req.body.comment);
+   // console.log("im here"+req.body.comment);
     Post.findById(req.params.id,function(err,Post){
         if(err){
             console.log(err);
@@ -161,12 +161,13 @@ app.post("/comment/:id",isLoggedIn,function(req,res){
                     comment.author.username = req.user.username;
                     //save comment
                     comment.save();
-                    console.log(comment);
+                   // console.log(comment);
                     //push to Post
                     Post.comments.push(comment);
                     Post.save();
 
-                    res.json({"comment":comment.text,"username":comment.author.username});
+                    var data={"comment":comment.text,"username":comment.author.username};
+                    res.json(data);
                     res.status(200).end();
 
                 }   

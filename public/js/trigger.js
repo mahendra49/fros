@@ -1,25 +1,35 @@
 $(document).ready(function(){
-   $("#commentsubmit").on("submit",function(e){
+   $(".commentsubmit").on("submit",function(e){
         e.preventDefault();
+       // console.log(e);
+
+
         var action1=e.currentTarget.action;
         
-        //console.log($("#currentsubmit").serialize());
-        
+        $(this).trigger("reset");
         $.ajax({
             url:action1,
             type:'post',
             dataType:'json',
             data: $(this).serialize(),
             success: function(data) {
-                console.log(data);
-                $(".commentslist").append("<li><b>"+data.username+" </b>"+data.comment+"</li>");
-                //$("#commentsubmit")[0].reset(); 
+               //$(this).trigger('reset');
+               console.log("here");
+                //$(".commentslist").append("<li><b>"+data.username+" </b>"+data.comment+"</li>");
+                 
             },
             error:function(err){
                 console.log("error");
             }
-        });
-
-        $("#commentsubmit")[0].reset();
+        })
+        
+       
+        
    });
 });
+
+
+
+
+
+
