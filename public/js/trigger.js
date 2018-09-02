@@ -15,10 +15,40 @@ $(document).ready(function(){
             }
         });
         $(this).trigger("reset");
-       
     });
 });
 
 
+//likes ajax
+function likepost(id,id_1){
+        
+    //console.log(id_1);    
+    var url="/likepost/"+id;
+    console.log(url);
+    var xmlreq = new XMLHttpRequest();
+    xmlreq.open("POST",url,true);
+    xmlreq.setRequestHeader('Content-type','application/json; charset=utf-8'); 
+    var data = {
+        postid:id
+    }
+    var json=JSON.stringify(data);
+
+    xmlreq.onreadystatechange = function(){
+        if(xmlreq.readyState==4 && xmlreq.status=="200"){
+            var res=JSON.parse(xmlreq.responseText);
+            if(res.ok==="1"){
+                console.log(res);
+                var val=id_1.querySelector("span");
+                val.textContent=Number(val.textContent)+1;
+            }
+        }else{
+            console.log("error")
+        }
+    };
+
+    xmlreq.send(json);
+ } 
+
+  
 
 

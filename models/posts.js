@@ -28,7 +28,8 @@ var postSchema = new mongoose.Schema({
     dislikes:{
         type:Number,
         default:0
-    }
+    },
+    likedby: [{type: String}]
 });
 
 module.exports = mongoose.model("Post", postSchema);

@@ -179,6 +179,34 @@ app.post("/comment/:id",isLoggedIn,function(req,res){
 
 });
 
+//likes section here
+
+app.post("/likepost/:id",function(req,res){
+
+    console.log("here");
+    Post.findById(req.params.id,function(err,post){
+        var listofNames=post.likedby;
+        if(err){
+            console.log("err");
+            res.json({"error":"comments"});
+        }
+        else{
+            if(listofNames.includes(req.user.username)){
+                //console.log("includes");
+                res.json({"ok":"0"});
+            }else{
+                //console.log("not included");
+                post.likedby.push(req.user.username);
+                post.likes=post.likes+1;
+                post.save();
+                res.json({"ok":"1"});
+            }
+        }
+    });
+
+
+});
+
 
 app.get("/logout",function(req,res){
     req.logout();
