@@ -14,8 +14,8 @@ $(document).ready(function(){
             data: $(this).serialize(),
             success: function(data) {
                //$(this).trigger('reset');
-               console.log("here");
-                //$(".commentslist").append("<li><b>"+data.username+" </b>"+data.comment+"</li>");
+               //console.log("here");
+               $(".commentslist").append("<li><b>"+data.username+" </b>"+data.comment+"</li>");
                  
             },
             error:function(err){
