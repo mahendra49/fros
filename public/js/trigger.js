@@ -23,7 +23,7 @@ $(document).ready(function(){
 function likepost(id,id_1){
         
     //console.log(id_1);    
-    var url="/likepost/"+id;
+    var url="/posts/like/"+id;
     console.log(url);
     var xmlreq = new XMLHttpRequest();
     xmlreq.open("POST",url,true);
