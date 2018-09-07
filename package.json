@@ -2,9 +2,9 @@
   "name": "fros",
   "version": "1.0.0",
   "description": "A soical network :P",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start":"node app.js"
   },
   "author": "varun,tars",
   "license": "ISC",

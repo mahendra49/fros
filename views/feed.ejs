@@ -2,11 +2,8 @@
 <!-- template credits  -->
 <!-- https://socialyte.codeplus.it/wall.html -->
 
-
-
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>social site</title>
 
@@ -26,10 +23,7 @@
     <script type="text/javascript" src="js/trigger.js""></script>
 
     <!-- https://socialyte.codeplus.it/wall.html -->
-
-   
 </head>
-
 <body id="wall">
 
     <!--Header with Nav -->
@@ -47,7 +41,6 @@
             <span><a href="/user" title="Profile"><span class="hidden-xs hidden-sm profile-name"><%=currentUser.username%></span> <i class="fa fa-user" aria-hidden="true"></i></a>
             </span>
         </div>
-        
     </header>
 
     <!--Left Sidebar with info Profile -->
@@ -75,12 +68,26 @@
                     </div>
                     <div class="col-xs-9 col-sm-10 info-user">
                         <h3><a href="personal-profile.html" title="Profile"><%=post.author.username%></a></h3>
-                        <p><i>2h</i></p>
+                        <p><i><%=post.created%></i></p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-8 col-sm-offset-2 data-post">
+                        <h2><%=post.title%></h2>
                         <p><%=post.body%></p>
+                        <script type="text/javascript">
+                            function imageExists("<%=post.image%>"){
+                                var http = new XMLHttpRequest();
+                                http.open('HEAD', image_url, false);
+                                http.send();
+                                <%var imgres %> = http.status; 
+                                //return http.status != 404;
+                            }   
+                        </script>
+                        <!-- image here -->
+                        <%if(imgres!=404){%>
+                            <img src="<%=post.image%>" class="img-circle" alt="Cinque Terre"> 
+                        <% }%>
                         <div class="reaction">
                             <img  onclick='return likepost("<%=post._id%>",this.parentElement)' draggable="false" class="emoji" alt="❤" src="https://twemoji.maxcdn.com/16x16/2764.png"><span ><%=post.likes%></span> 
                         </div>
@@ -101,26 +108,13 @@
                     </div>
                 </div>
             </div>
-
-
-                
             <% });%> 
-
-
-
         </div>
-
-
         <!--Close #posts-container-->
         <div id="loading">
             <img src="img/load.gif" alt="loader">
         </div>
     </div>
-   
-
 </body>
-
-
-
 </html>
 

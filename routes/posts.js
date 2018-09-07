@@ -1,9 +1,10 @@
 //all required
-const   express     = require("express"),
-        router      = express.Router(),
-        Post        = require("../models/posts"),
-        User        = require("../models/users"),
-        Middleware  = require("../middleware/index");
+const   express          = require("express"),
+        router           = express.Router(),
+        Post             = require("../models/posts"),
+        User             = require("../models/users"),
+        Middleware       = require("../middleware/index"),
+        expressSanitizer = require("express-sanitizer");
 
 //new posts logic
 router.get("/new",Middleware.isLoggedIn,function(req,res){
@@ -13,13 +14,19 @@ router.get("/new",Middleware.isLoggedIn,function(req,res){
 router.post("/",Middleware.isLoggedIn,function(req,res){
     
     //req.body.post.body  = req.sanitize(req.body.post.body);
+    
     var newPost   = req.body.post;
+    newPost.body  = req.sanitize(newPost.body);
+    newPost.title = req.sanitize(newPost.title);
+    newPost.image = req.sanitize(newPost.image);
+    
     var author    = {
         id          : req.user._id,
         username    : req.user.username
     };
     
     newPost.author = author; 
+
     Post.create(newPost,function(err,post){
         if(err){
             console.log("error--posts route");
@@ -38,7 +45,7 @@ router.post("/",Middleware.isLoggedIn,function(req,res){
                             res.redirect("/");
                         }
                         else{
-                            //console.log(data);
+                            console.log(post);
                             res.redirect("/user");
                         }
                     });
