@@ -4,8 +4,8 @@ A Nodejs app where one can write articles and share it and thus share knowledge.
 This app is made using 
 <ul>
     <li>NodeJS</li>
-    <li>MongoDb</li>
+    <li>MongoDB</li>
     <li>Express</li>
-    <li>PassportJs</li>
+    <li>PassportJS</li>
     <li>Mongoose</li>
 </ul> 
