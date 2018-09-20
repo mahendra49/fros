@@ -68,7 +68,9 @@
                     </div>
                     <div class="col-xs-9 col-sm-10 info-user">
                         <h3><a href="personal-profile.html" title="Profile"><%=post.author.username%></a></h3>
-                        <p><i><%=post.created%></i></p>
+                        <% var postTime=post.created %>
+                        <p><i><%=postTime.getHours()+":"+postTime.getMinutes()+"|"+postTime.getDate()+"-"+postTime.getMonth()+"-"+postTime.getFullYear()%></i></p>
+                        <p class="time-stamp"><%=post.created%></p> 
                     </div>
                 </div>
                 <div class="row">

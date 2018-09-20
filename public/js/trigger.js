@@ -49,6 +49,34 @@ function likepost(id,id_1){
     xmlreq.send(json);
  } 
 
+//stack overflow
+var processing;
+$(document).scroll(function(e){
+
+    if (processing)
+        return false;
+
+    if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.7){
+        processing = true;
+        //get last element of class card-post and get the timestamp to query(loadajax)
+        var lastPostTime=document.querySelector(".card-post .time-stamp:last-child").innerHTML;
+        var data={"timestamp":lastPostTime};
+        $.ajax({
+            url:"/posts/loadpost",
+            type:"post",
+            contentType: "application/json",
+            data:JSON.stringify(data),
+            success:(data)=>{
+
+                console.log("success"+data);
+            },
+            error:()=>{
+                console.log("error");
+            }
+
+        });
+    }
+});
 
  
 
