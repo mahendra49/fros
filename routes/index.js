@@ -23,11 +23,10 @@ router.get("/register",function(req,res){
 });
 
 router.post("/register",Middleware.isLogged,function(req,res){
-    var username=req.body.username;
-    var password=req.body.password;
-    var email=req.body.email;
-
-
+    const username=req.body.username;
+    const password=req.body.password;
+    const email=req.body.email;
+    
     User.register({
         username:username,
         email:email
@@ -47,7 +46,7 @@ router.post("/register",Middleware.isLogged,function(req,res){
 //index page
 router.get("/user",Middleware.isLoggedIn,function(req,res){
     
-    Post.find({}).sort('-created').populate("comments").exec(function(err,posts){
+    Post.find({}).sort('-created').limit(5).populate("comments").exec(function(err,posts){
         if(err){
             console.log("in user route");
             res.redirect("/");

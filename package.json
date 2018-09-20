@@ -4,7 +4,7 @@
   "description": "A soical network :P",
   "main": "app.js",
   "scripts": {
-    "start":"node app.js"
+    "start": "node app.js"
   },
   "author": "varun,tars",
   "license": "ISC",
