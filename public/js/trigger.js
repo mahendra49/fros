@@ -66,9 +66,9 @@ $(document).scroll(function(e){
             type:"post",
             contentType: "application/json",
             data:JSON.stringify(data),
-            success:(data)=>{
-
-                console.log("success"+data);
+            success:(posts)=>{
+                let cardPostInnerhtml = new EJS({url: 'templates/feed_template.ejs'}).render({posts:posts});
+                $("#posts-container").append(cardPostInnerhtml);
             },
             error:()=>{
                 console.log("error");

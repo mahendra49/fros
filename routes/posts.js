@@ -57,14 +57,18 @@ router.post("/",Middleware.isLoggedIn,function(req,res){
  // db.posts.find({"created":{"$lte":new Date("Thu Sep 20 2018 19:52:14 GMT+0530")}});
 
  router.post("/loadpost",(req,res)=>{
+    console.log("here");
     var timestamp=req.body.timestamp;
     Post.find({"created":{"$lte":new Date(timestamp)}})
         .sort('-created').limit(5)
         .populate("comments").exec((err,data)=>{
             if(err){
                 console.log("error in ajax load comments");
+                res.json({"error":"loading ajax"});
+            }else{  
+                res.json(data);    
             }
-            console.log(data);
+            
     });    
  });
 
