@@ -1,6 +1,7 @@
 //comment ajax
+//second argument is for adding the event to future elements(dynamicallt loaded ajax)
 $(document).ready(function(){
-   $(".commentsubmit").on("submit",function(e){
+   $("#posts-container").on("submit",".commentsubmit",function(e){
         e.preventDefault();
         var action1=e.currentTarget.action;
         $.ajax({
