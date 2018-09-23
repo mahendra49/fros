@@ -10,7 +10,7 @@
             <h3><a href="personal-profile.html" title="Profile"><%=post.author.username%></a></h3>
             <% var postTime= new Date(post.created)%>
             <p><i><%=postTime.getHours()+":"+postTime.getMinutes()+"|"+postTime.getDate()+"-"+postTime.getMonth()+"-"+postTime.getFullYear()%></i></p>
-            <p class="time-stamp"><%=postTime%></p> 
+            <p class="time-stamp"><%=postTime+" "%></p> 
         </div>
     </div>
     <div class="row">

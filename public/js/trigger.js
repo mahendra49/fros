@@ -1,3 +1,4 @@
+//comment ajax
 $(document).ready(function(){
    $(".commentsubmit").on("submit",function(e){
         e.preventDefault();
@@ -49,7 +50,7 @@ function likepost(id,id_1){
     xmlreq.send(json);
  } 
 
-//stack overflow
+//stack overflow for lading ajax on scrool
 var processing;
 $(document).scroll(function(e){
 
@@ -59,7 +60,7 @@ $(document).scroll(function(e){
     if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.7){
         processing = true;
         //get last element of class card-post and get the timestamp to query(loadajax)
-        var lastPostTime=document.querySelector(".card-post .time-stamp:last-child").innerHTML;
+        var lastPostTime=document.querySelectorAll(".card-post:last-child .time-stamp")[0].innerHTML;
         var data={"timestamp":lastPostTime};
         $.ajax({
             url:"/posts/loadpost",
@@ -67,8 +68,15 @@ $(document).scroll(function(e){
             contentType: "application/json",
             data:JSON.stringify(data),
             success:(posts)=>{
-                let cardPostInnerhtml = new EJS({url: 'templates/feed_template.ejs'}).render({posts:posts});
-                $("#posts-container").append(cardPostInnerhtml);
+                if(posts.length==0){
+                    processing=true;
+                }
+                else{
+                    let cardPostInnerhtml = new EJS({url: 'templates/feed_template.ejs'}).render({posts:posts});
+                    $("#posts-container").append(cardPostInnerhtml);
+                    processing=false;
+                }
+                
             },
             error:()=>{
                 console.log("error");
