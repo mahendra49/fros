@@ -17,7 +17,10 @@ var userSchema = new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:"Post"
         }
-    ]
+    ],
+    profilepicture:{
+        type:String
+    }
 });
 
 userSchema.plugin(passportlocalmongoose);

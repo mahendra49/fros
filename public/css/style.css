@@ -80,6 +80,7 @@ video, img {
 .img-user {
     width: 90%;
     margin-left: 5%;
+    height: 40%;
 }
 
 .card-post .img-user  { max-width: 110px;
@@ -470,7 +471,8 @@ footer.login-footer {
                                       }
 
 @media screen and (max-width:991px) {  .img-user { width: 100%;
-                                                   margin: 0px;}
+                                                   margin: 0px;
+                                                   height:50%;}
 
                                         header .dropdown-menu { top:33px; }
 
@@ -495,7 +497,8 @@ footer.login-footer {
                   padding: 10px;}
 
   .img-user   { width:80%;
-                margin-left:10%;  }
+                margin-left:10%;
+                height: 50%;  }
 
   .card-post .img-user { width:70%;
                         margin-left:15%; }

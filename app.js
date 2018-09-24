@@ -35,6 +35,10 @@ app.use(require("express-session")({
     saveUninitialized:false
 }));
 
+app.use((req,res,next)=>{
+    res.locals.currentUser = req.user;
+    next();
+});
 
 //passport authentication setup
 app.use(passport.initialize());

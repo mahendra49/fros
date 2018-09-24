@@ -96,15 +96,33 @@ router.post("/loadpost",Middleware.isLoggedIn,(req,res)=>{
             }
             
     });    
- });
-
-router.get("/profilepicture",Middleware.isLoggedIn,(req,res)=>{
-    res.render("profile");
 });
 
- //profile picture
- router.post("/profilepicture",Middleware.isLoggedIn,upload.single("profilepicture"),(req,res)=>{
-    res.send("done uploading..");
- });
+router.get("/profilepicture/:id",(req,res)=>{
+    console.log(__dirname+"/image/"+req.params.id);
+    res.sendFile(__dirname+"/image/"+req.params.id);
+});
+
+//upload picture and save it with user mongo id(unique)
+router.post("/profilepicture",Middleware.isLoggedIn,upload.single("profilepicture"),(req,res)=>{
+    //find user and upload picture
+    User.findOne({username:req.user.username},(err,userdata)=>{
+        if(err){
+            console.log("error");
+        }else{
+            userdata.profilepicture="./images/"+req.user._id;
+            userdata.save((err,data)=>{
+                if(err){
+                    console.log("error in saving data");
+                    res.json({"ok":"0"});
+                }
+                else{
+                    res.json({"ok":"1"});
+                }
+            });
+        }    
+
+    });
+});
 
 module.exports = router; 
