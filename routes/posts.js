@@ -4,7 +4,34 @@ const   express          = require("express"),
         Post             = require("../models/posts"),
         User             = require("../models/users"),
         Middleware       = require("../middleware/index"),
-        expressSanitizer = require("express-sanitizer");
+        expressSanitizer = require("express-sanitizer"),
+        multer           = require("multer"),
+        path             = require("path");
+
+
+//storage path and rename file name
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './images/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.user._id+".jpg");
+  }
+});
+
+var upload = multer({ //multer settings
+    storage: storage,
+    fileFilter: function (req, file, callback) {
+        var ext = path.extname(file.originalname);
+        if(ext !== '.jpg' && ext !== '.jpeg') {
+            return callback(new Error('Only images are allowed'))
+        }
+        callback(null, true)
+    },
+    limits:{
+        fileSize: 1024 * 1024
+    }
+});
 
 //new posts logic
 router.get("/new",Middleware.isLoggedIn,function(req,res){
@@ -56,7 +83,7 @@ router.post("/",Middleware.isLoggedIn,function(req,res){
 
  // db.posts.find({"created":{"$lte":new Date("Thu Sep 20 2018 19:52:14 GMT+0530")}});
 
- router.post("/loadpost",(req,res)=>{
+router.post("/loadpost",Middleware.isLoggedIn,(req,res)=>{
     const timestamp=req.body.timestamp;
     Post.find({"created":{"$lte":new Date(timestamp)}})
         .sort('-created').limit(5)
@@ -69,6 +96,15 @@ router.post("/",Middleware.isLoggedIn,function(req,res){
             }
             
     });    
+ });
+
+router.get("/profilepicture",Middleware.isLoggedIn,(req,res)=>{
+    res.render("profile");
+});
+
+ //profile picture
+ router.post("/profilepicture",Middleware.isLoggedIn,upload.single("profilepicture"),(req,res)=>{
+    res.send("done uploading..");
  });
 
 module.exports = router; 

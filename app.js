@@ -17,6 +17,7 @@ var mongoose                        = require("mongoose"),
     LikeRoute                       = require("./routes/like"),
     Middleware                      = require("./middleware/index");
 
+
 mongoose.connect("mongodb://localhost/social",{useNewUrlParser:true});
 
 //serve "public" files and set view engine as "ejs"
