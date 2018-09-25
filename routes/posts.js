@@ -15,7 +15,7 @@ var storage = multer.diskStorage({
     cb(null, './images/')
   },
   filename: function (req, file, cb) {
-    cb(null, req.user._id+".jpg");
+    cb(null, req.user.username+".jpg");
   }
 });
 
@@ -99,8 +99,7 @@ router.post("/loadpost",Middleware.isLoggedIn,(req,res)=>{
 });
 
 router.get("/profilepicture/:id",(req,res)=>{
-    console.log(__dirname+"/image/"+req.params.id);
-    res.sendFile(__dirname+"/image/"+req.params.id);
+    res.sendFile(path.join(__dirname, '..', '/images',req.params.id+'.jpg'));
 });
 
 //upload picture and save it with user mongo id(unique)
@@ -110,7 +109,7 @@ router.post("/profilepicture",Middleware.isLoggedIn,upload.single("profilepictur
         if(err){
             console.log("error");
         }else{
-            userdata.profilepicture="./images/"+req.user._id;
+            userdata.profilepicture="./images/"+req.user.username;
             userdata.save((err,data)=>{
                 if(err){
                     console.log("error in saving data");
