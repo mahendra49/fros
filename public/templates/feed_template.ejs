@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-xs-3 col-sm-2">
             <a href="personal-profile.html" title="Profile">
-                <img src="img/user.jpg" alt="User name" class="img-circle img-user">
+                <img src="/posts/profilepicture/<%=post.author.username%>" alt="User name" class="img-circle img-user">
             </a>
         </div>
         <div class="col-xs-9 col-sm-10 info-user">
@@ -21,7 +21,7 @@
             <img src="<%=post.image%>" class="img-circle" alt="Cinque Terre"> 
             
             <div class="reaction">
-                <img  onclick='return likepost("<%=post._id%>",this.parentElement)' draggable="false" class="emoji" alt="❤" src="https://twemoji.maxcdn.com/16x16/2764.png"><span ><%=post.likes%></span> 
+                <img  onclick='return likepost("<%=post._id%>",this.parentElement)' draggable="false" class="emoji" alt="❤" src="https://au.kg/images/like.png"><span ><%=post.likes%></span> 
             </div>
             <div class="comments">
                 

@@ -99,6 +99,7 @@ router.post("/loadpost",Middleware.isLoggedIn,(req,res)=>{
 });
 
 router.get("/profilepicture/:id",(req,res)=>{
+    console.log("here");
     res.sendFile(path.join(__dirname, '..', '/images',req.params.id+'.jpg'));
 });
 

@@ -68,7 +68,7 @@ video, img {
     height: auto;
 }
 
-.emoji  { width:16px;}
+.emoji  { width:30px; height: 30px; outline: none !important;;box-shadow: none;}
 
 .btn:focus,.btn:active, .btn:active:focus  { outline:none; }
 
@@ -82,7 +82,29 @@ video, img {
     margin-left: 5%;
     height: 40%;
 }
+upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
 
+.btn-upload {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
 .card-post .img-user  { max-width: 110px;
                         min-width: 60px;}
 

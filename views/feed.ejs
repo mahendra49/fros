@@ -45,13 +45,13 @@
     </header>
 
     <!--Left Sidebar with info Profile -->
-    <div class="sidebar-nav">
+    <div class="sidebar-nav container-fluid">
         <a href="personal-profile.html" title="Profile">
             <img src="/posts/profilepicture/<%=currentUser.username%>" alt="User name" width="50px" height="50px" class="img-circle img-user" id="profile-image-display">
         </a>
 
         <h2 class="text-center hidden-xs"><a href="personal-profile.html" title="Profile"><%=currentUser.username%></a></h2>
-        <span onclick="profilepicture()" style="display:block ">change profile picture</span>
+        <button class="btn btn-info" onclick="profilepicture()" style="display:block ">Upload</button>
         <div id="profile-picture-upload" style="display: none">
             <form action="/posts/profilepicture" method="POST" enctype="multipart/form-data" id="profile-picture-upload-form">
                 <input type="file" name="profilepicture" multiple="1" accept=".jpg, .jpeg" id="profile-file-input" onchange="loadFile(event)">
@@ -59,7 +59,7 @@
             </form>    
         </div>
         <p class="text-center user-description hidden-xs">
-            <a class="btn btn-primary" href="/posts/new">Post Your Idea</a>
+            <a class="btn btn-primary col-xs-2" href="/posts/new">Post Your Idea</a>
         </p>
     </div>
 
@@ -84,13 +84,13 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-8 col-sm-offset-2 data-post">
-                        <h2><%=post.title%></h2>
+                        <h1 style="font-family:  Courier New"><%=post.title%></h1>
                         <p><%-post.body%></p>
                         <!-- image here -->
                         <img src="<%=post.image%>" class="img-circle" alt="Cinque Terre"> 
                         
                         <div class="reaction">
-                            <img  onclick='return likepost("<%=post._id%>",this.parentElement)' draggable="false" class="emoji" alt="❤" src="https://twemoji.maxcdn.com/16x16/2764.png"><span ><%=post.likes%></span> 
+                            <img  onclick='return likepost("<%=post._id%>",this.parentElement)' draggable="false" class="emoji" alt="❤" src="https://banner2.kisspng.com/20180320/dre/kisspng-facebook-like-button-clip-art-facebook-thumbs-up-icon-5ab173b3eb19c0.869074021521578931963.jpg"><span ><%=post.likes%></span> 
                         </div>
                         <div class="comments">
                             
