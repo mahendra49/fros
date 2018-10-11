@@ -30,7 +30,7 @@ i.icon{
 
     <div class="ui main text container segment">
         <div class="ui huge header">New Blog</div>
-        <form class="ui form" action="/posts" method="POST">
+        <form class="ui form" action="/posts" enctype="multipart/form-data" method="POST">
           <div class="field">
             <label>Title</label>
             <input type="text" name="post[title]" placeholder="title">
@@ -42,6 +42,10 @@ i.icon{
           <div class="field">
             <label>post</label>
             <textarea name="post[body]" ></textarea>
+          </div>
+          <div class="field">
+            <label>Choose photos to upload:</label>
+            <input type="file" name="p_images" multiple="3" accept=".jpg, .jpeg">
           </div>
         <input class="ui violet basic big button" type="submit" value="submit">
         </form>

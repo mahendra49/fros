@@ -6,10 +6,10 @@ const   express          = require("express"),
         Middleware       = require("../middleware/index"),
         expressSanitizer = require("express-sanitizer"),
         multer           = require("multer"),
-        path             = require("path");
+        path             = require("path"),
+        randomstring = require("randomstring");
 
-
-//storage path and rename file name
+//storage path and rename file name for profile pictures
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './images/')
@@ -19,7 +19,7 @@ var storage = multer.diskStorage({
   }
 });
 
-var upload = multer({ //multer settings
+var uploadProfile = multer({ //multer settings
     storage: storage,
     fileFilter: function (req, file, callback) {
         var ext = path.extname(file.originalname);
@@ -33,26 +33,57 @@ var upload = multer({ //multer settings
     }
 });
 
+//storage path and rename file name for posts pictures
+var posts_storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './postsImages/')
+  },
+  filename: function (req, file, cb) {
+    let date = (Date()+randomstring.generate()).replace(/ /g,"");
+    cb(null, req.user.username+date+".jpg");
+  }
+});
+
+var uploadPosts = multer({ //multer settings
+    storage: posts_storage,
+    fileFilter: function (req, file, callback) {
+        var ext = path.extname(file.originalname);
+        if(ext !== '.jpg' && ext !== '.jpeg') {
+            return callback(new Error('Only images are allowed'))
+        }
+        callback(null, true)
+    },
+    limits:{
+        fileSize: 1024 * 1024
+    }
+});
+
+
 //new posts logic
 router.get("/new",Middleware.isLoggedIn,function(req,res){
     res.render("new");
 });
 
-router.post("/",Middleware.isLoggedIn,function(req,res){
+//new posts by a user
+router.post("/",Middleware.isLoggedIn,uploadPosts.array("p_images",3),function(req,res){
     
     //req.body.post.body  = req.sanitize(req.body.post.body);
     
-    let newPost   = req.body.post;
-    newPost.body  = req.sanitize(newPost.body);
-    newPost.title = req.sanitize(newPost.title);
-    newPost.image = req.sanitize(newPost.image);
-    
-    let author    = {
+    let newPost    = req.body.post;
+    newPost.author = {
         id          : req.user._id,
         username    : req.user.username
-    };
-    
-    newPost.author = author; 
+    }; 
+    newPost.body   = req.sanitize(newPost.body);
+    newPost.title  = req.sanitize(newPost.title);
+    newPost.image  = req.sanitize(newPost.image);
+    newPost.uploadImgaesPath=new Array();
+
+    //post image data info
+    req.files.forEach((file)=>{
+        newPost.uploadImgaesPath.push(file.filename);
+    });
+    console.log(newPost.uploadImgaesPath);
 
     Post.create(newPost,function(err,post){
         if(err){
@@ -104,7 +135,7 @@ router.get("/profilepicture/:id",(req,res)=>{
 });
 
 //upload picture and save it with user mongo id(unique)
-router.post("/profilepicture",Middleware.isLoggedIn,upload.single("profilepicture"),(req,res)=>{
+router.post("/profilepicture",Middleware.isLoggedIn,uploadProfile.single("profilepicture"),(req,res)=>{
     //find user and upload picture
     User.findOne({username:req.user.username},(err,userdata)=>{
         if(err){

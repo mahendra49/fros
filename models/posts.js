@@ -4,6 +4,11 @@ var postSchema = new mongoose.Schema({
     title   : String,
     image   : String,
     body    : String,
+    uploadImgaesPath:[
+        {
+            type:String
+        }
+    ],
     author:{
         id:{
             type:mongoose.Schema.Types.ObjectId,
