@@ -64,6 +64,18 @@ router.get("/new",Middleware.isLoggedIn,function(req,res){
     res.render("new");
 });
 
+router.get("/:id",Middleware.isLoggedIn,function(req,res){
+    Post.findById(req.params.id,function(err,post){
+        if(err){
+            console.log("error in getting posts");
+            res.send("something went wrong");
+        }
+        else{
+            res.render("show",{post:post});
+        }
+    });
+});
+
 //new posts by a user
 router.post("/",Middleware.isLoggedIn,uploadPosts.array("p_images",3),function(req,res){
     

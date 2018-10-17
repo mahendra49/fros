@@ -20,6 +20,9 @@ here you can change #f3ad00 main color.
     border: #f3ad00;
 }
 
+.postid{
+  display: none;
+}
 
 /*----------------------------------------------------------------
   [Table of contents]

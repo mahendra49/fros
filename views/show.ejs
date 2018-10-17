@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BlogApp</title>
+  <style type="text/css">
+.ui.main.text.container.segment {
+  margin: 5em;
+}
+  </style>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
+</head>
+<body>
+    <div class="ui fixed inverted menu">
+      <div class="ui container">
+        <div class="header item"> <i class="code icon"></i>Story</div>
+        <a href="/user" class="item">Home</a>
+        <a href="/posts/new" class="item">New Post</a>
+      </div>
+    </div>
+  
+
+  <div class="ui main text container segment">
+    <div class="ui huge header"><%= post.title %></div>
+    <div  class="ui top attached">
+      <div class="content">
+         <!-- that dash evalutes text as html code -->
+         <span> <%- post.created.toDateString()%></span> 
+      </div>
+      <div class="description">
+          <p><%- post.body %></p> 
+      </div>
+      
+      
+    </div>
+  </div> 
+
+</body>
+</html>
+
+
+

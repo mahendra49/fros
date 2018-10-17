@@ -56,6 +56,10 @@ $(document).ready(function(){
             }
         });
         
+    });
+
+    $(".showfullpost").on("click",function(e){
+        console.log(e.currentTarget.nextElementSibling.innerHTML);
     });   
 
 });

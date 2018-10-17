@@ -85,12 +85,17 @@
                 <div class="row">
                     <div class="col-sm-8 col-sm-offset-2 data-post">
                         <h1 style="font-family:  Courier New"><%=post.title%></h1>
-                        <p><%-post.body%></p>
+                        <p class="showfullpost"><%-post.body.substring(0,100)%>
+                            <%if(post.body.length > 100) {%>
+                                <a style="color:blue;" href="/posts/<%=post._id%>" >show more</a>
+                            <%}%>
+                        </p>
+                        <span class="postid"><%=post._id%></span>
                         <!-- image here -->
                         <img src="<%=post.image%>" class="img-circle" alt="Cinque Terre"> 
                         
                         <div class="reaction">
-                            <img  onclick='return likepost("<%=post._id%>",this.parentElement)' draggable="false" class="emoji" alt="❤" src="https://banner2.kisspng.com/20180320/dre/kisspng-facebook-like-button-clip-art-facebook-thumbs-up-icon-5ab173b3eb19c0.869074021521578931963.jpg"><span ><%=post.likes%></span> 
+                            <img  onclick='return likepost("<%=post._id%>",this.parentElement)' draggable="false" class="emoji" alt="❤" src="https://au.kg/images/like.png"><span ><%=post.likes%></span> 
                         </div>
                         <div class="comments">
                             
