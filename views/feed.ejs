@@ -54,7 +54,7 @@
         <button class="btn btn-info" onclick="profilepicture()" style="display:block ">Upload</button>
         <div id="profile-picture-upload" style="display: none">
             <form action="/posts/profilepicture" method="POST" enctype="multipart/form-data" id="profile-picture-upload-form">
-                <input type="file" name="profilepicture" multiple="1" accept=".jpg, .jpeg" id="profile-file-input" onchange="loadFile(event)">
+                <input type="file" name="profilepicture" multiple="1" accept=".jpg, .jpeg" id="profile-file-input"  onchange="loadFile(event)">
                 <input type="submit" value="upload">
             </form>    
         </div>

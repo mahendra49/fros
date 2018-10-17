@@ -148,6 +148,7 @@ router.get("/profilepicture/:id",(req,res)=>{
 
 //upload picture and save it with user mongo id(unique)
 router.post("/profilepicture",Middleware.isLoggedIn,uploadProfile.single("profilepicture"),(req,res)=>{
+    console.log("here1");
     //find user and upload picture
     User.findOne({username:req.user.username},(err,userdata)=>{
         if(err){
